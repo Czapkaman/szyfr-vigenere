@@ -1,6 +1,5 @@
 #include <iostream>
 #include <fstream>
-#include <Windows.h>
 #include <vector>
 #include <string>
 
@@ -158,6 +157,5 @@ int main()
 		cout << endl;
 	}
 	
-	system("pause");
 	return 0;
 }
