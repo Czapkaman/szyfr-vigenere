@@ -117,7 +117,7 @@ void MIc(vector<char> &CryptedText, int Columns)
 
 	for (int i = 0; i < Columns - 1; i++)
 	{
-		for (int j = 1; j < Columns; j++)
+		for (int j = 1 + i; j < Columns; j++)
 		{
 			if ( i == j ) continue;
 			sum = 0;
