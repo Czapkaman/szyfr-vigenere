@@ -11,12 +11,16 @@ bool Read(vector<char> &Vec, const char* File)
 
 	if (RawText.is_open())
 	{
+		char temp = 0;
 		RawText.seekg(0, RawText.end);
 		Vec.reserve(RawText.tellg());
 		RawText.seekg(0, RawText.beg);
 		while (RawText.peek() != EOF) 
 		{
-			Vec.emplace_back(RawText.get());
+			temp = RawText.get();
+            		if(temp > 64 && temp < 91) temp = (temp + 32 - 19) % 26 + 97;
+			if(temp < 97 || temp > 126) continue;
+			Vec.emplace_back(temp);
 		}
 		RawText.close();
 		return 0;
