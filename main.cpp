@@ -140,26 +140,32 @@ int main()
 	vector<char> Text;
 	if (!Read(Text, "tekst.txt"))
 	{
-		for (auto i : Text) { cout << i; }
+		if(Text.size() != 0)
+		{
+		    for (auto i : Text) { cout << i; }
+		    string key;
+		    cout << "\nPlease give me a key: ";
+		    cin >> key;
+		    cout << "Your key is: \"" << key << "\"\n";
+		    Crypting(Text, key);
+		    for (auto i : Text) { cout << i; }
+		    Write(Text);
+		    cout << endl;
 
-		string key;
-		cout << "\nPlease give me a key: ";
-		cin >> key;
-		cout << "Your key is: \"" << key << "\"\n";
-		Crypting(Text, key);
-		for (auto i : Text) { cout << i; }
-		Write(Text);
-		cout << endl;
+		    int Col = 0;
+		    cout << "How many columns do you want: ";
+		    cin >> Col;
 
-		int Col = 0;
-		cout << "How many columns do you want: ";
-		cin >> Col;
+		    Ic(Text, Col);
+		    MIc(Text, Col);
 
-		Ic(Text, Col);
-		MIc(Text, Col);
-
-		cout << endl;
+		    cout << endl;
+		}
+		else
+		{
+		    cout << "tekst.txt is empty!" << endl;
+		}
 	}
-	
+
 	return 0;
 }
