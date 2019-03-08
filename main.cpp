@@ -12,14 +12,17 @@ bool Read(vector<char> &Vec, const char* File)
 	if (RawText.is_open())
 	{
 		char temp = 0;
+		int i = 0;
 		RawText.seekg(0, RawText.end);
-		Vec.reserve(RawText.tellg());
+		i = RawText.tellg();
+		Vec.reserve(i);
 		RawText.seekg(0, RawText.beg);
-		while (RawText.peek() != EOF) 
+		while (i)
 		{
+			i--;
 			temp = RawText.get();
-            		if(temp > 64 && temp < 91) temp = (temp + 32 - 19) % 26 + 97;
-			if(temp < 97 || temp > 126) continue;
+			if (temp > 64 && temp < 91) temp = (temp + 32 - 19) % 26 + 97;
+			if (temp < 97 || temp > 126) continue;
 			Vec.emplace_back(temp);
 		}
 		RawText.close();
@@ -78,7 +81,7 @@ void Ic(vector<char> &CryptedText, int Columns)
 
 	for (unsigned int i = 0; i < 26; i++) { alphabet.emplace_back(0); }
 
-	cout << "Ic for each column: ";
+	cout << "\nIc for each column: ";
 	for (int C = 0; C < Columns; C++)
 	{
 		sum = 0;
@@ -123,47 +126,44 @@ void MIc(vector<char> &CryptedText, int Columns)
 	{
 		for (int j = 1 + i; j < Columns; j++)
 		{
-			if ( i == j ) continue;
+			if (i == j) continue;
 			sum = 0;
-			for (int letter = 0; letter < 26; letter++) 
+			for (int letter = 0; letter < 26; letter++)
 			{
 				sum += alphabet[i][letter] * alphabet[j][letter];
 			}
-			cout << "\n MIc(X^" << i << ", X^" << j << "): " << (sum / (N[i] * N[i + 1])) << "\n";
+			cout << "\n MIc(X^" << i << ", X^" << j << "): " << (sum / (N[i] * N[j])) << "\n";
 		}
 	}
 }
 
 int main()
 {
-
 	vector<char> Text;
 	if (!Read(Text, "tekst.txt"))
 	{
-		if(Text.size() != 0)
+		if (Text.size() != 0)
 		{
-		    for (auto i : Text) { cout << i; }
-		    string key;
-		    cout << "\nPlease give me a key: ";
-		    cin >> key;
-		    cout << "Your key is: \"" << key << "\"\n";
-		    Crypting(Text, key);
-		    for (auto i : Text) { cout << i; }
-		    Write(Text);
-		    cout << endl;
+			for (auto i : Text) { cout << i; }
+			string key;
+			cout << "\nPlease give me a key: ";
+			cin >> key;
+			cout << "Your key is: \"" << key << "\"\n";
+			Crypting(Text, key);
+			for (auto i : Text) { cout << i; }
+			Write(Text);
+			cout << endl;
 
-		    int Col = 0;
-		    cout << "How many columns do you want: ";
-		    cin >> Col;
+			int Col = 0;
+			cout << "How many columns do you want: ";
+			cin >> Col;
 
-		    Ic(Text, Col);
-		    MIc(Text, Col);
-
-		    cout << endl;
+			Ic(Text, Col);
+			MIc(Text, Col);
 		}
 		else
 		{
-		    cout << "tekst.txt is empty!" << endl;
+			cout << "tekst.txt is empty!" << endl;
 		}
 	}
 
